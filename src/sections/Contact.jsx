@@ -2,141 +2,182 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useInView } from '../hooks/useInView'
 import { personalInfo } from '../data/portfolio'
-import { Github, Linkedin, Twitter, Mail, Send } from 'lucide-react'
+import { Github, Linkedin, Twitter, Mail, Send, ArrowRight } from 'lucide-react'
 
 export default function Contact() {
-  const [ref, inView] = useInView(0.15)
-  const [form, setForm]   = useState({ name: '', email: '', message: '' })
-  const [sent, setSent]   = useState(false)
+  const [ref, inView] = useInView(0.12)
+  const [form, setForm] = useState({ name: '', email: '', message: '' })
+  const [sent, setSent] = useState(false)
+  const [focused, setFocused] = useState(null)
 
-  const handleChange = (e) => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
+  const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault()
-    // For real implementation: use EmailJS, Formspree, or a backend endpoint
-    // EmailJS is the easiest for students — see README for setup
-    const mailtoLink = `mailto:${personalInfo.email}?subject=Portfolio Contact from ${form.name}&body=${encodeURIComponent(form.message)}%0A%0AFrom: ${form.email}`
-    window.open(mailtoLink)
+    const link = `mailto:${personalInfo.email}?subject=Portfolio Contact from ${encodeURIComponent(form.name)}&body=${encodeURIComponent(form.message + '\n\nFrom: ' + form.email)}`
+    window.open(link)
     setSent(true)
   }
 
   return (
-    <section id="contact" ref={ref} className="py-32 bg-bg relative overflow-hidden">
-      <div className="absolute inset-0 grid-bg opacity-20" />
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-accent/5 rounded-full blur-3xl pointer-events-none" />
+    <section id="contact" ref={ref} className="py-32 relative overflow-hidden" style={{ background: 'var(--bg)' }}>
+      {/* Big ambient glow */}
+      <motion.div
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none"
+        style={{ width: 700, height: 400, background: 'radial-gradient(ellipse, rgba(91,110,245,0.08) 0%, transparent 70%)', filter: 'blur(40px)' }}
+        animate={{ scale: [1, 1.1, 1], opacity: [0.5, 0.8, 0.5] }}
+        transition={{ duration: 6, repeat: Infinity }}
+      />
+      <div className="absolute inset-0 grid-bg opacity-30" />
 
-      <div className="max-w-6xl mx-auto px-6 relative">
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="flex items-center gap-4 mb-16"
+          transition={{ duration: 0.7 }}
+          className="flex items-center gap-4 mb-20"
         >
-          <span className="font-mono text-accent text-sm">04.</span>
-          <h2 className="font-display font-bold text-3xl md:text-4xl">Get In Touch</h2>
-          <div className="flex-1 h-px bg-border ml-4 max-w-xs" />
+          <span className="font-mono text-sm" style={{ color: '#5b6ef5' }}>04.</span>
+          <h2 className="font-display font-bold text-4xl md:text-5xl" style={{ color: 'var(--text)' }}>
+            Get In Touch
+          </h2>
+          <div className="flex-1 h-px max-w-xs ml-4" style={{ background: 'var(--border)' }} />
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-16">
           {/* Left */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -40 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.1 }}
+            transition={{ duration: 0.8, delay: 0.1, ease: [0.22,1,0.36,1] }}
           >
-            <p className="text-muted leading-relaxed mb-8 max-w-md">
-              I'm always open to interesting opportunities — internships, freelance projects,
-              or just a good conversation about tech. My inbox is open.
-            </p>
-
-            <a
+            {/* Big email */}
+            <motion.a
               href={`mailto:${personalInfo.email}`}
-              className="inline-flex items-center gap-3 text-accent font-mono text-sm hover:gap-5 transition-all duration-300 mb-10"
+              whileHover={{ x: 8 }}
+              className="flex items-center gap-3 font-mono text-sm mb-10 group"
+              style={{ color: '#5b6ef5' }}
             >
               <Mail size={16} />
               {personalInfo.email}
-              <span>→</span>
-            </a>
+              <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+            </motion.a>
 
-            <div className="space-y-4 border-t border-border pt-8">
+            <p className="leading-relaxed mb-10 max-w-md" style={{ color: 'var(--muted)' }}>
+              I'm always open to interesting opportunities — internships, freelance projects, or just a good
+              conversation about tech. My inbox is always open.
+            </p>
+
+            {/* Social links */}
+            <div className="space-y-4" style={{ paddingTop: '2rem', borderTop: '1px solid var(--border)' }}>
               {[
-                { icon: Github,   label: 'GitHub',   href: personalInfo.github   },
-                { icon: Linkedin, label: 'LinkedIn', href: personalInfo.linkedin  },
-                { icon: Twitter,  label: 'Twitter',  href: personalInfo.twitter   },
-              ].map(({ icon: Icon, label, href }) => (
-                <a
+                { Icon: Github,   label: 'GitHub',   sub: 'vivekfaujdar', href: personalInfo.github   },
+                { Icon: Linkedin, label: 'LinkedIn',  sub: 'in/vivekfaujdar', href: personalInfo.linkedin  },
+                { Icon: Twitter,  label: 'Twitter',   sub: '@vivekfaujdar', href: personalInfo.twitter   },
+              ].map(({ Icon, label, sub, href }) => (
+                <motion.a
                   key={label}
                   href={href}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-3 text-muted hover:text-accent transition-colors group"
+                  whileHover={{ x: 6 }}
+                  className="flex items-center gap-4 p-3 transition-all group"
+                  style={{ border: '1px solid transparent' }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.background = 'var(--card)' }}
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = 'transparent'; e.currentTarget.style.background = 'transparent' }}
                 >
-                  <Icon size={16} className="group-hover:scale-110 transition-transform" />
-                  <span className="font-mono text-sm">{label}</span>
-                  <span className="ml-auto font-mono text-xs text-border group-hover:text-accent">↗</span>
-                </a>
+                  <Icon size={18} style={{ color: '#5b6ef5' }} />
+                  <div>
+                    <div className="font-display font-medium text-sm" style={{ color: 'var(--text)' }}>{label}</div>
+                    <div className="font-mono text-xs" style={{ color: 'var(--muted)' }}>{sub}</div>
+                  </div>
+                  <ArrowRight size={14} className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: '#5b6ef5' }} />
+                </motion.a>
               ))}
             </div>
           </motion.div>
 
           {/* Right — form */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 40 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: [0.22,1,0.36,1] }}
           >
             {sent ? (
-              <div className="border border-green/30 bg-green/5 p-8 text-center">
-                <div className="text-green font-mono text-4xl mb-4">✓</div>
-                <p className="font-display font-bold text-text text-lg mb-2">Message sent!</p>
-                <p className="text-muted font-mono text-sm">I'll get back to you soon.</p>
-              </div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="p-10 text-center"
+                style={{ border: '1px solid #06ffa5', background: 'rgba(6,255,165,0.05)' }}
+              >
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ delay: 0.2, type: 'spring' }}
+                  className="text-5xl mb-4"
+                >✓</motion.div>
+                <p className="font-display font-bold text-lg mb-2" style={{ color: 'var(--text)' }}>Message Sent!</p>
+                <p className="font-mono text-sm" style={{ color: 'var(--muted)' }}>I'll get back to you soon.</p>
+              </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
                 {[
-                  { name: 'name',    label: 'Your Name',    type: 'text',  placeholder: 'John Doe' },
-                  { name: 'email',   label: 'Email Address',type: 'email', placeholder: 'john@example.com' },
-                ].map((field) => (
+                  { name: 'name',  label: 'Your Name',     type: 'text',  ph: 'John Doe' },
+                  { name: 'email', label: 'Email Address',  type: 'email', ph: 'john@example.com' },
+                ].map(field => (
                   <div key={field.name}>
-                    <label className="font-mono text-xs text-muted uppercase tracking-widest block mb-2">
+                    <label className="font-mono text-xs uppercase tracking-widest block mb-2"
+                      style={{ color: focused === field.name ? '#5b6ef5' : 'var(--muted)' }}>
                       {field.label}
                     </label>
                     <input
-                      type={field.type}
-                      name={field.name}
-                      value={form[field.name]}
-                      onChange={handleChange}
-                      placeholder={field.placeholder}
-                      required
-                      className="w-full bg-surface border border-border text-text font-mono text-sm px-4 py-3 focus:outline-none focus:border-accent transition-colors placeholder:text-border"
-                      style={{ cursor: 'text' }}
+                      type={field.type} name={field.name} value={form[field.name]}
+                      onChange={handleChange} placeholder={field.ph} required
+                      onFocus={() => setFocused(field.name)}
+                      onBlur={() => setFocused(null)}
+                      className="w-full font-mono text-sm px-4 py-3 outline-none transition-all"
+                      style={{
+                        background: 'var(--surface)', cursor: 'text',
+                        color: 'var(--text)',
+                        border: `1px solid ${focused === field.name ? '#5b6ef5' : 'var(--border)'}`,
+                        boxShadow: focused === field.name ? '0 0 0 3px rgba(91,110,245,0.1)' : 'none',
+                      }}
                     />
                   </div>
                 ))}
+
                 <div>
-                  <label className="font-mono text-xs text-muted uppercase tracking-widest block mb-2">
+                  <label className="font-mono text-xs uppercase tracking-widest block mb-2"
+                    style={{ color: focused === 'message' ? '#5b6ef5' : 'var(--muted)' }}>
                     Message
                   </label>
                   <textarea
-                    name="message"
-                    value={form.message}
-                    onChange={handleChange}
-                    placeholder="Hi Vivek, I'd like to talk about..."
-                    required
-                    rows={5}
-                    className="w-full bg-surface border border-border text-text font-mono text-sm px-4 py-3 focus:outline-none focus:border-accent transition-colors placeholder:text-border resize-none"
-                    style={{ cursor: 'text' }}
+                    name="message" value={form.message} onChange={handleChange}
+                    placeholder="Hi Vivek, I'd like to talk about..." required rows={5}
+                    onFocus={() => setFocused('message')}
+                    onBlur={() => setFocused(null)}
+                    className="w-full font-mono text-sm px-4 py-3 outline-none resize-none transition-all"
+                    style={{
+                      background: 'var(--surface)', cursor: 'text',
+                      color: 'var(--text)',
+                      border: `1px solid ${focused === 'message' ? '#5b6ef5' : 'var(--border)'}`,
+                      boxShadow: focused === 'message' ? '0 0 0 3px rgba(91,110,245,0.1)' : 'none',
+                    }}
                   />
                 </div>
-                <button
+
+                <motion.button
                   type="submit"
-                  className="w-full bg-accent text-bg font-display font-bold text-sm py-3.5 tracking-wide hover:bg-accent/90 transition-all flex items-center justify-center gap-2 glow"
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.97 }}
+                  className="w-full py-4 font-display font-semibold text-sm tracking-wide flex items-center justify-center gap-2 accent-glow"
+                  style={{ background: '#5b6ef5', color: 'var(--bg)' }}
                 >
-                  <Send size={14} />
-                  Send Message
-                </button>
-                <p className="font-mono text-xs text-border text-center">
-                  // or email me directly at {personalInfo.email}
+                  <Send size={14} /> Send Message
+                </motion.button>
+
+                <p className="font-mono text-xs text-center" style={{ color: 'var(--muted)' }}>
+                  // or email me at {personalInfo.email}
                 </p>
               </form>
             )}

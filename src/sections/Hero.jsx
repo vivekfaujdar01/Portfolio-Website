@@ -1,19 +1,14 @@
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { useState, useEffect, useRef } from 'react'
+import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion'
 import { personalInfo, stats } from '../data/portfolio'
-import { Github, Linkedin, Twitter, ArrowDown } from 'lucide-react'
-
-const fadeUp = (delay = 0) => ({
-  initial:    { opacity: 0, y: 40 },
-  animate:    { opacity: 1, y: 0  },
-  transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] },
-})
+import { Github, Linkedin, Twitter, ArrowDown, Sparkles } from 'lucide-react'
 
 const ROLES = [
   "Full Stack Developer",
   "React Enthusiast",
   "Backend Engineer",
   "Open Source Contributor",
+  "Problem Solver",
 ]
 
 function TypingText() {
@@ -26,18 +21,14 @@ function TypingText() {
   useEffect(() => {
     if (paused) return
     const current = ROLES[roleIdx]
-    const speed   = deleting ? 35 : 75
-
     const timer = setTimeout(() => {
       if (!deleting) {
         const next = charIdx + 1
         setDisplayed(current.slice(0, next))
         if (next === current.length) {
           setPaused(true)
-          setTimeout(() => { setDeleting(true); setPaused(false) }, 1800)
-        } else {
-          setCharIdx(next)
-        }
+          setTimeout(() => { setDeleting(true); setPaused(false) }, 2000)
+        } else setCharIdx(next)
       } else {
         const next = charIdx - 1
         setDisplayed(current.slice(0, next))
@@ -45,157 +36,268 @@ function TypingText() {
           setDeleting(false)
           setCharIdx(0)
           setRoleIdx(r => (r + 1) % ROLES.length)
-        } else {
-          setCharIdx(next)
-        }
+        } else setCharIdx(next)
       }
-    }, speed)
+    }, deleting ? 32 : 68)
 
     return () => clearTimeout(timer)
   }, [charIdx, deleting, roleIdx, paused])
 
   return (
     <span>
-      <span className="text-text">{displayed}</span>
-      <span className="cursor-blink text-accent ml-0.5">|</span>
+      <span style={{ color: 'var(--text)' }}>{displayed}</span>
+      <span className="cursor-blink" style={{ color: '#5b6ef5' }}>|</span>
     </span>
   )
 }
 
-function CodeCard() {
+function FloatingOrb({ size, delay, x, y, color }) {
   return (
-    <div className="bg-surface border border-border overflow-hidden glow">
-      <div className="flex items-center gap-2 px-4 py-3 border-b border-border bg-card">
+    <motion.div
+      className="absolute rounded-full pointer-events-none"
+      style={{ width: size, height: size, left: x, top: y,
+        background: `radial-gradient(circle, ${color}18 0%, transparent 70%)`,
+        filter: 'blur(40px)'
+      }}
+      animate={{ y: [0, -30, 0], scale: [1, 1.1, 1] }}
+      transition={{ duration: 8 + delay, repeat: Infinity, ease: 'easeInOut', delay }}
+    />
+  )
+}
+
+function CodeCard() {
+  const [activeIdx, setActiveIdx] = useState(-1)
+
+  const lines = [
+    { code: <><span style={{color:'var(--code-keyword)'}}>const</span> <span style={{color:'var(--code-var)'}}>vivek</span> <span style={{color:'var(--muted)'}}>=</span> {'{'}</>, blank: false },
+    { code: <><span className="pl-4 block"><span style={{color:'var(--code-prop)'}}>name</span><span style={{color:'var(--muted)'}}>:</span> <span style={{color:'var(--code-string)'}}>"Vivek Faujdar"</span>,</span></>, blank: false },
+    { code: <><span className="pl-4 block"><span style={{color:'var(--code-prop)'}}>role</span><span style={{color:'var(--muted)'}}>:</span> <span style={{color:'var(--code-string)'}}>"Full Stack Dev"</span>,</span></>, blank: false },
+    { code: <><span className="pl-4 block"><span style={{color:'var(--code-prop)'}}>stack</span><span style={{color:'var(--muted)'}}>:</span> [<span style={{color:'var(--code-string)'}}>"React"</span>, <span style={{color:'var(--code-string)'}}>"Node"</span>, <span style={{color:'var(--code-string)'}}>"Java"</span>],</span></>, blank: false },
+    { code: <><span className="pl-4 block"><span style={{color:'var(--code-prop)'}}>available</span><span style={{color:'var(--muted)'}}>:</span> <span style={{color:'var(--code-bool)'}}>true</span></span></>, blank: false },
+    { code: <>{'}'}</>, blank: false },
+  ]
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30, rotateX: 10 }}
+      animate={{ opacity: 1, y: 0, rotateX: 0 }}
+      transition={{ duration: 1, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      className="accent-glow"
+      style={{ border: '1px solid var(--border)', background: 'var(--card)' }}
+    >
+      {/* Title bar */}
+      <div className="flex items-center gap-2 px-4 py-3" style={{ borderBottom: '1px solid var(--border)', background: 'var(--surface)' }}>
         <span className="w-3 h-3 rounded-full bg-red-500/60" />
         <span className="w-3 h-3 rounded-full bg-yellow-500/60" />
-        <span className="w-3 h-3 rounded-full bg-green/60" />
-        <span className="font-mono text-xs text-muted ml-2">vivek.config.js</span>
-        <span className="ml-auto w-2 h-2 rounded-full bg-green/60 animate-pulse" title="online" />
+        <span className="w-3 h-3 rounded-full" style={{ background: '#06ffa5', opacity: 0.7 }} />
+        <span className="font-mono text-xs ml-2" style={{ color: 'var(--muted)' }}>vivek.config.js</span>
+        <motion.span
+          className="ml-auto w-2 h-2 rounded-full"
+          style={{ background: '#06ffa5' }}
+          animate={{ opacity: [1, 0.3, 1] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+        />
       </div>
+
+      {/* Code */}
       <div className="p-6 font-mono text-sm leading-7">
-        <p><span className="text-[#79c0ff]">const</span> <span className="text-[#ffa657]">developer</span> <span className="text-text">= {'{'}</span></p>
-        <p className="pl-4"><span className="text-[#7ee787]">name</span><span className="text-text">: </span><span className="text-[#a5d6ff]">"Vivek Faujdar"</span><span className="text-text">,</span></p>
-        <p className="pl-4"><span className="text-[#7ee787]">role</span><span className="text-text">: </span><span className="text-[#a5d6ff]">"Full Stack Developer"</span><span className="text-text">,</span></p>
-        <p className="pl-4"><span className="text-[#7ee787]">stack</span><span className="text-text">: [</span></p>
-        <p className="pl-8"><span className="text-[#a5d6ff]">"React"</span><span className="text-text">, </span><span className="text-[#a5d6ff]">"Node.js"</span><span className="text-text">,</span></p>
-        <p className="pl-8"><span className="text-[#a5d6ff]">"Java"</span><span className="text-text">, </span><span className="text-[#a5d6ff]">"Docker"</span><span className="text-text">,</span></p>
-        <p className="pl-8"><span className="text-[#a5d6ff]">"MongoDB"</span><span className="text-text">, </span><span className="text-[#a5d6ff]">"PostgreSQL"</span></p>
-        <p className="pl-4"><span className="text-text">],</span></p>
-        <p className="pl-4"><span className="text-[#7ee787]">hardWorking</span><span className="text-text">: </span><span className="text-[#79c0ff]">true</span><span className="text-text">,</span></p>
-        <p className="pl-4"><span className="text-[#7ee787]">available</span><span className="text-text">: </span><span className="text-[#79c0ff]">true</span></p>
-        <p><span className="text-text">{'}'}</span></p>
-        <p className="mt-2">
-          <span className="text-[#79c0ff]">export default</span>
-          <span className="text-text"> developer</span>
-          <span className="cursor-blink text-accent">_</span>
-        </p>
+        {lines.map((line, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.7 + i * 0.1 }}
+            className="flex gap-4 group cursor-default"
+            onMouseEnter={() => setActiveIdx(i)}
+            onMouseLeave={() => setActiveIdx(-1)}
+            style={{
+              background: activeIdx === i ? 'rgba(91,110,245,0.06)' : 'transparent',
+              marginLeft: -8,
+              paddingLeft: 8,
+              borderLeft: activeIdx === i ? '2px solid #5b6ef5' : '2px solid transparent',
+            }}
+          >
+            <span className="select-none w-4 text-right" style={{ color: 'var(--border)' }}>{i + 1}</span>
+            <span>{line.code}</span>
+          </motion.div>
+        ))}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5 }}
+          className="mt-2 font-mono text-sm"
+        >
+          <span style={{ color: 'var(--code-keyword)' }}>export default</span>
+          <span style={{ color: 'var(--text)' }}> vivek</span>
+          <span className="cursor-blink" style={{ color: '#5b6ef5' }}>_</span>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   )
+}
+
+const stagger = {
+  container: { hidden: {}, visible: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } } },
+  item: {
+    hidden: { opacity: 0, y: 40 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } }
+  }
 }
 
 export default function Hero() {
   return (
-    <section id="home" className="relative min-h-screen flex items-center grid-bg overflow-hidden pt-20">
-      <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-accent/4 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-green/4 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="absolute top-28 right-10 font-mono text-xs text-border/50 leading-6 hidden xl:block select-none">
-        {['// vivek-portfolio v1.0', 'import { passion } from "./heart"', 'import { skills } from "./brain"'].map((l, i) => (
-          <div key={i} className="flex gap-3">
-            <span className="text-border/30 w-4 text-right">{i + 1}</span>
-            <span>{l}</span>
-          </div>
-        ))}
-      </div>
+    <section id="home" className="relative min-h-screen flex items-center overflow-hidden pt-20 grid-bg">
+      <FloatingOrb size={600} delay={0}   x="−10%"  y="5%"   color="#5b6ef5" />
+      <FloatingOrb size={400} delay={2}   x="60%"  y="50%"  color="#8b5cf6" />
+      <FloatingOrb size={300} delay={4}   x="20%"  y="70%"  color="#06ffa5" />
 
       <div className="max-w-6xl mx-auto px-6 w-full py-24">
         <div className="grid lg:grid-cols-5 gap-16 items-center">
-          <div className="lg:col-span-3">
-            <motion.div {...fadeUp(0.1)}
-              className="inline-flex items-center gap-2 border border-border bg-surface px-4 py-2 mb-8 font-mono text-xs"
+          {/* Text */}
+          <motion.div
+            className="lg:col-span-3"
+            variants={stagger.container}
+            initial="hidden"
+            animate="visible"
+          >
+            {/* Badge */}
+            <motion.div variants={stagger.item}
+              className="inline-flex items-center gap-2 px-4 py-2 mb-8 font-mono text-xs"
+              style={{ border: '1px solid var(--border)', background: 'var(--card)' }}
             >
-              <span className="w-2 h-2 rounded-full bg-green animate-pulse" />
-              <span className="text-muted">Open to internships &amp; projects</span>
+              <motion.span
+                className="w-2 h-2 rounded-full"
+                style={{ background: '#06ffa5' }}
+                animate={{ scale: [1, 1.4, 1] }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
+              />
+              <span style={{ color: 'var(--muted)' }}>Open to internships &amp; projects — 2025</span>
             </motion.div>
 
-            <motion.div {...fadeUp(0.2)}>
-              <p className="font-mono text-accent text-sm tracking-widest mb-3">{'> Hello, world! I\'m'}</p>
-              <h1 className="font-display font-extrabold leading-none tracking-tight">
-                <span className="text-text text-6xl md:text-8xl block">Vivek</span>
-                <span className="text-gradient text-6xl md:text-8xl block">Faujdar</span>
+            {/* Name */}
+            <motion.div variants={stagger.item}>
+              <p className="font-mono text-sm tracking-widest mb-3" style={{ color: '#5b6ef5' }}>
+                {'> Hello, world! I\'m'}
+              </p>
+              <h1 className="font-display font-bold leading-none tracking-tight">
+                <motion.span
+                  className="block"
+                  style={{ fontSize: 'clamp(3.5rem, 8vw, 5.5rem)', color: 'var(--text)' }}
+                >
+                  Vivek
+                </motion.span>
+                <motion.span
+                  className="block text-gradient"
+                  style={{ fontSize: 'clamp(3.5rem, 8vw, 5.5rem)' }}
+                >
+                  Faujdar
+                </motion.span>
               </h1>
             </motion.div>
 
-            <motion.div {...fadeUp(0.35)} className="mt-5 flex items-center gap-2 font-mono text-base md:text-lg text-muted">
-              <span className="text-border text-xl">{'>'}</span>
+            {/* Typewriter */}
+            <motion.div variants={stagger.item}
+              className="mt-5 flex items-center gap-2 font-mono text-lg"
+              style={{ color: 'var(--muted)' }}
+            >
+              <span style={{ color: 'var(--border)', fontSize: '1.25rem' }}>{'>'}</span>
               <TypingText />
             </motion.div>
 
-            <motion.p {...fadeUp(0.45)} className="mt-6 text-muted leading-relaxed max-w-md">
+            {/* Desc */}
+            <motion.p variants={stagger.item}
+              className="mt-5 leading-relaxed max-w-md"
+              style={{ color: 'var(--muted)', fontSize: '0.95rem' }}
+            >
               {personalInfo.description}
             </motion.p>
 
-            <motion.div {...fadeUp(0.55)} className="mt-8 flex flex-wrap gap-4">
-              <a href="#projects"
-                className="bg-accent text-bg px-7 py-3 font-display font-bold text-sm tracking-wide hover:bg-accent/90 transition-all glow">
+            {/* CTAs */}
+            <motion.div variants={stagger.item} className="mt-8 flex flex-wrap gap-4">
+              <motion.a
+                href="#projects"
+                whileHover={{ scale: 1.04, y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                className="px-7 py-3.5 font-display font-semibold text-sm tracking-wide accent-glow"
+                style={{ background: '#5b6ef5', color: 'var(--bg)' }}
+              >
                 View Projects
-              </a>
-              <a href={`mailto:${personalInfo.email}`}
-                className="border border-border text-text px-7 py-3 font-display font-bold text-sm tracking-wide hover:border-accent hover:text-accent transition-all">
+              </motion.a>
+              <motion.a
+                href={`mailto:${personalInfo.email}`}
+                whileHover={{ scale: 1.04, y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                className="px-7 py-3.5 font-display font-semibold text-sm tracking-wide transition-all"
+                style={{ border: '1px solid var(--border)', color: 'var(--text)' }}
+                onMouseEnter={e => { e.currentTarget.style.borderColor = '#5b6ef5'; e.currentTarget.style.color = '#5b6ef5' }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text)' }}
+              >
                 Hire Me →
-              </a>
+              </motion.a>
             </motion.div>
 
-            <motion.div {...fadeUp(0.65)} className="mt-8 flex items-center gap-5">
-              <span className="font-mono text-xs text-border">// find me on</span>
+            {/* Socials */}
+            <motion.div variants={stagger.item} className="mt-8 flex items-center gap-5">
+              <span className="font-mono text-xs" style={{ color: 'var(--border)' }}>// connect</span>
               <div className="flex gap-4">
                 {[
                   { Icon: Github,   href: personalInfo.github   },
                   { Icon: Linkedin, href: personalInfo.linkedin  },
                   { Icon: Twitter,  href: personalInfo.twitter   },
                 ].map(({ Icon, href }) => (
-                  <a key={href} href={href} target="_blank" rel="noreferrer"
-                    className="text-muted hover:text-accent transition-colors p-1">
+                  <motion.a key={href} href={href} target="_blank" rel="noreferrer"
+                    whileHover={{ y: -3, scale: 1.2 }}
+                    style={{ color: 'var(--muted)' }}
+                    onMouseEnter={e => e.currentTarget.style.color = '#5b6ef5'}
+                    onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}
+                  >
                     <Icon size={18} />
-                  </a>
+                  </motion.a>
                 ))}
               </div>
             </motion.div>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:col-span-2 hidden lg:block"
-          >
-            <CodeCard />
           </motion.div>
+
+          {/* Code card */}
+          <div className="lg:col-span-2 hidden lg:block">
+            <CodeCard />
+          </div>
         </div>
 
+        {/* Stats */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.9 }}
-          className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-px bg-border"
+          transition={{ duration: 0.8, delay: 1.1 }}
+          className="mt-20 grid grid-cols-2 md:grid-cols-4"
+          style={{ border: '1px solid var(--border)' }}
         >
-          {stats.map((stat) => (
-            <div key={stat.label} className="bg-bg p-6 text-center hover:bg-surface transition-colors">
-              <div className="font-display font-extrabold text-3xl text-gradient">{stat.value}</div>
-              <div className="font-mono text-xs text-muted mt-1 uppercase tracking-widest">{stat.label}</div>
-            </div>
+          {stats.map((stat, i) => (
+            <motion.div
+              key={stat.label}
+              whileHover={{ background: 'var(--card)' }}
+              className="p-6 text-center transition-colors"
+              style={{ borderRight: i < 3 ? '1px solid var(--border)' : 'none', background: 'var(--surface)' }}
+            >
+              <div className="font-display font-bold text-3xl text-gradient counter">{stat.value}</div>
+              <div className="font-mono text-xs mt-1 uppercase tracking-widest" style={{ color: 'var(--muted)' }}>{stat.label}</div>
+            </motion.div>
           ))}
         </motion.div>
       </div>
 
+      {/* Scroll indicator */}
       <motion.a href="#about"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         animate={{ y: [0, 8, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-muted hover:text-accent transition-colors"
-        aria-label="Scroll down"
+        transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+        style={{ color: 'var(--muted)' }}
+        aria-label="Scroll"
+        onMouseEnter={e => e.currentTarget.style.color = '#5b6ef5'}
+        onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}
       >
-        <ArrowDown size={20} />
+        <span className="font-mono text-xs tracking-widest uppercase">scroll</span>
+        <ArrowDown size={16} />
       </motion.a>
     </section>
   )

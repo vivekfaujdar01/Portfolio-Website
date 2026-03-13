@@ -1,21 +1,25 @@
+import { motion } from 'framer-motion'
 import { personalInfo } from '../data/portfolio'
 
 export default function Footer() {
   return (
-    <footer className="bg-surface border-t border-border py-8">
+    <footer className="py-8" style={{ background: 'var(--surface)', borderTop: '1px solid var(--border)' }}>
       <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
-        <div className="font-mono text-xs text-muted">
-          <span className="text-accent">Vivek Faujdar</span> · Built with React, Tailwind &amp; Framer Motion
+        <div className="font-mono text-xs" style={{ color: 'var(--muted)' }}>
+          <span className="text-gradient font-bold">Vivek Faujdar</span>
+          {' · '}Built with React, Tailwind &amp; Framer Motion
         </div>
-        <div className="font-mono text-xs text-muted">
-          © {new Date().getFullYear()} · Designed &amp; built by Vivek Faujdar
+        <div className="font-mono text-xs" style={{ color: 'var(--muted)' }}>
+          © {new Date().getFullYear()} · All rights reserved
         </div>
-        <a
+        <motion.a
           href="#home"
-          className="font-mono text-xs text-muted hover:text-accent transition-colors border border-border px-3 py-1.5 hover:border-accent"
+          whileHover={{ y: -2, color: '#5b6ef5', borderColor: '#5b6ef5' }}
+          className="font-mono text-xs px-3 py-1.5 transition-all"
+          style={{ border: '1px solid var(--border)', color: 'var(--muted)' }}
         >
           Back to top ↑
-        </a>
+        </motion.a>
       </div>
     </footer>
   )

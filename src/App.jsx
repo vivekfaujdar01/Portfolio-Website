@@ -22,8 +22,8 @@ function Inner() {
           to scroll with the page instead of staying fixed to the viewport. */}
       <Cursor />
       <ScrollProgress />
+      <Navbar />
       <div className="page-enter" style={{ background: 'var(--bg)', color: 'var(--text)', minHeight: '100vh' }}>
-        <Navbar />
         <main>
           <Hero />
           <About />

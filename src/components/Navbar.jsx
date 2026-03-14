@@ -142,13 +142,22 @@ export default function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, clipPath: 'circle(0% at calc(100% - 2rem) 2rem)' }}
-            animate={{ opacity: 1, clipPath: 'circle(150% at calc(100% - 2rem) 2rem)' }}
-            exit={{   opacity: 0, clipPath: 'circle(0% at calc(100% - 2rem) 2rem)' }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-6"
-            style={{ background: 'var(--bg)' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center gap-6 glass"
+            style={{ background: 'color-mix(in srgb, var(--bg) 95%, transparent)' }}
           >
+            {/* Close button inside mobile menu */}
+            <button
+              onClick={() => setOpen(false)}
+              className="absolute top-6 right-6 p-2 text-theme flex flex-col gap-1.5"
+              aria-label="Close Menu"
+            >
+              <span className="block w-6 h-px bg-current transform rotate-45 translate-y-[3.5px]" />
+              <span className="block w-6 h-px bg-current transform -rotate-45 -translate-y-[3.5px]" />
+            </button>
             {navLinks.map((link, i) => (
               <motion.a
                 key={link.href}
@@ -158,9 +167,9 @@ export default function Navbar() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.08 + 0.1 }}
                 className="font-display font-bold text-4xl"
-                style={{ color: 'var(--muted)' }}
+                style={{ color: 'var(--text)' }}
                 onMouseEnter={e => e.currentTarget.style.color = '#5b6ef5'}
-                onMouseLeave={e => e.currentTarget.style.color = 'var(--muted)'}
+                onMouseLeave={e => e.currentTarget.style.color = 'var(--text)'}
               >
                 <span className="font-mono text-sm" style={{ color: '#5b6ef5' }}>{link.num}.</span> {link.label}
               </motion.a>

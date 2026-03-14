@@ -224,7 +224,7 @@ export default function Hero() {
                 View Projects
               </motion.a>
               <motion.a
-                href={`mailto:${personalInfo.email}`}
+                href="#contact"
                 whileHover={{ scale: 1.04, y: -2 }}
                 whileTap={{ scale: 0.97 }}
                 className="px-7 py-3.5 font-display font-semibold text-sm tracking-wide transition-all"

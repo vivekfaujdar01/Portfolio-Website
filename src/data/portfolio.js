@@ -9,30 +9,46 @@ export const personalInfo = {
   description:
     "A Computer Science student passionate about building end-to-end digital products. I love turning complex problems into elegant, efficient solutions — from backend APIs to polished UIs.",
   location: "India",
-  email: "vivek@example.com",        // ← change this
-  github: "https://github.com/vivekfaujdar",   // ← change this
-  linkedin: "https://linkedin.com/in/vivekfaujdar", // ← change this
+  email: "vivekfaujdar06@gmail.com",        // ← change this
+  github: "https://github.com/vivekfaujdar01",   // ← change this
+  linkedin: "https://www.linkedin.com/in/vivekfaujdar01/", // ← change this
   twitter: "https://twitter.com/vivekfaujdar",    // ← change this
   resumeUrl: "/resume.pdf",          // ← add your resume to /public/resume.pdf
   availableForWork: true,
+  githubUsername: "vivekfaujdar01",    // ← used for GitHub heatmap & stats embeds
+  leetcodeUsername: "vivekfaujdar01",  // ← used for LeetCode live stats
 }
 
 export const skills = [
-  // Frontend
-  { name: "React / Next.js",  category: "Frontend",  level: 88, icon: "⚛️" },
-  { name: "HTML & CSS",       category: "Frontend",  level: 92, icon: "🌐" },
-  { name: "Tailwind CSS",     category: "Frontend",  level: 87, icon: "🎨" },
-  { name: "JavaScript",       category: "Frontend",  level: 85, icon: "🟨" },
-  // Backend
-  { name: "Node.js / Express",category: "Backend",   level: 82, icon: "🟢" },
-  { name: "Java",             category: "Backend",   level: 78, icon: "☕" },
-  // Database & Tools
-  { name: "SQL / NoSQL",      category: "Database",  level: 80, icon: "🗄️" },
-  { name: "Git & GitHub",     category: "Tools",     level: 90, icon: "🐙" },
-  { name: "Docker",           category: "DevOps",    level: 68, icon: "🐳" },
-  { name: "Postman",          category: "Tools",     level: 85, icon: "📮" },
-  { name: "DSA / Algorithms", category: "CS Fundamentals", level: 75, icon: "🧠" },
-  { name: "TypeScript",       category: "Frontend",  level: 72, icon: "🔷" },
+  // Languages
+  { name: "Java",               category: "Languages", level: 80, icon: "☕" },
+  { name: "JavaScript (ES6+)",  category: "Languages", level: 88, icon: "🟨" },
+
+  // Web Development
+  { name: "HTML5 & CSS3",       category: "Web Development", level: 92, icon: "🌐" },
+  { name: "Tailwind CSS",       category: "Web Development", level: 87, icon: "🎨" },
+  { name: "React.js",           category: "Web Development", level: 88, icon: "⚛️" },
+  { name: "Express.js",         category: "Web Development", level: 82, icon: "🚂" },
+  { name: "Node.js",            category: "Web Development", level: 83, icon: "🟢" },
+
+  // Database Management
+  { name: "MongoDB",            category: "Database Management", level: 80, icon: "🍃" },
+  { name: "MySQL",              category: "Database Management", level: 75, icon: "🐬" },
+
+  // Version Control
+  { name: "GitHub",             category: "Version Control", level: 90, icon: "🐙" },
+  { name: "GitLab",             category: "Version Control", level: 78, icon: "🦊" },
+
+  // Development & Utility
+  { name: "Linux",              category: "Development & Utility", level: 72, icon: "🐧" },
+  { name: "Postman",            category: "Development & Utility", level: 85, icon: "📮" },
+  { name: "Docker",             category: "Development & Utility", level: 68, icon: "🐳" },
+
+  // Soft Skills
+  { name: "Problem-Solving",    category: "Soft Skills", level: 92, icon: "🧩" },
+  { name: "Team Player",        category: "Soft Skills", level: 90, icon: "🤝" },
+  { name: "Adaptability",       category: "Soft Skills", level: 88, icon: "🔄" },
+  { name: "Time Management",    category: "Soft Skills", level: 85, icon: "⏱️" },
 ]
 
 export const projects = [
@@ -114,7 +130,7 @@ export const experience = [
 
 export const stats = [
   { value: "13+", label: "Technologies" },
-  { value: "10+", label: "Projects Built" },
-  { value: "500+", label: "LeetCode Problems" },
+  { value: "4+", label: "Projects Built" },
+  { value: "300+", label: "LeetCode Problems" },
   { value: "∞",   label: "Cups of Coffee" },
 ]

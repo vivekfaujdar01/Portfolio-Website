@@ -3,16 +3,17 @@ import { motion } from 'framer-motion'
 import { useTheme } from '../context/ThemeContext'
 
 export default function Cursor() {
-  const [pos, setPos]         = useState({ x: -100, y: -100 })
-  const [hover, setHover]     = useState(false)
+  const [pos, setPos]           = useState({ x: -100, y: -100 })
+  const [hover, setHover]       = useState(false)
   const [clicking, setClicking] = useState(false)
-  const [trail, setTrail]     = useState([])
-  const { isDark }            = useTheme()
+  const [trail, setTrail]       = useState([])
+  const trailId                 = useRef(0)
+  const { isDark }              = useTheme()
 
   useEffect(() => {
     const move = (e) => {
       setPos({ x: e.clientX, y: e.clientY })
-      setTrail(t => [...t.slice(-8), { x: e.clientX, y: e.clientY, id: Date.now() }])
+      setTrail(t => [...t.slice(-8), { x: e.clientX, y: e.clientY, id: ++trailId.current }])
     }
     const down = () => setClicking(true)
     const up   = () => setClicking(false)

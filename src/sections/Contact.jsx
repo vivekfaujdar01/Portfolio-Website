@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { useInView } from '../hooks/useInView'
 import { personalInfo } from '../data/portfolio'
 import { Github, Linkedin, Twitter, Mail, Send, ArrowRight } from 'lucide-react'
+import emailjs from '@emailjs/browser'
 
 export default function Contact() {
   const [ref, inView] = useInView(0.12)
@@ -12,12 +13,15 @@ export default function Contact() {
 
   const handleChange = e => setForm(f => ({ ...f, [e.target.name]: e.target.value }))
 
-  const handleSubmit = e => {
-    e.preventDefault()
-    const link = `mailto:${personalInfo.email}?subject=Portfolio Contact from ${encodeURIComponent(form.name)}&body=${encodeURIComponent(form.message + '\n\nFrom: ' + form.email)}`
-    window.open(link)
-    setSent(true)
-  }
+  const handleSubmit = (e) => {
+  e.preventDefault()
+  emailjs.send(
+    import.meta.env.VITE_EMAILJS_SERVICE_ID,
+    import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+    { name: form.name, email: form.email, message: form.message },
+    import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+  ).then(() => setSent(true))
+}
 
   return (
     <section id="contact" ref={ref} className="py-32 relative overflow-hidden" style={{ background: 'var(--bg)' }}>

@@ -4,10 +4,11 @@ import { personalInfo } from '../data/portfolio'
 import ThemeToggle from './ThemeToggle'
 
 const navLinks = [
-  { label: 'About',    href: '#about',    num: '01' },
-  { label: 'Skills',   href: '#skills',   num: '02' },
-  { label: 'Projects', href: '#projects', num: '03' },
-  { label: 'Contact',  href: '#contact',  num: '04' },
+  { label: 'About',         href: '#about',         num: '01' },
+  { label: 'Skills',        href: '#skills',        num: '02' },
+  { label: 'Contributions', href: '#contributions', num: '03' },
+  { label: 'Projects',      href: '#projects',      num: '04' },
+  { label: 'Contact',       href: '#contact',       num: '05' },
 ]
 
 export default function Navbar() {
@@ -23,7 +24,7 @@ export default function Navbar() {
 
   // Active section tracker
   useEffect(() => {
-    const ids = ['about', 'skills', 'projects', 'contact']
+    const ids = ['about', 'skills', 'contributions', 'projects', 'contact']
     const observer = new IntersectionObserver(
       (entries) => entries.forEach(e => e.isIntersecting && setActive(e.target.id)),
       { rootMargin: '-40% 0px -40% 0px' }

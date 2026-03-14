@@ -37,7 +37,7 @@ export default function About() {
                 className="w-32 h-32 flex items-center justify-center font-display font-bold text-5xl text-gradient accent-glow"
                 style={{ background: 'var(--card)', border: '1px solid var(--border)' }}
               >
-                VF
+                <img src="/avatar.jpg" alt="Vivek" className="w-28 h-28 object-cover object-top" />
               </motion.div>
               <motion.div
                 animate={{ rotate: [0, 360] }}

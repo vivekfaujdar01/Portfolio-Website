@@ -8,7 +8,8 @@ const navLinks = [
   { label: 'Skills',        href: '#skills',        num: '02' },
   { label: 'Contributions', href: '#contributions', num: '03' },
   { label: 'Projects',      href: '#projects',      num: '04' },
-  { label: 'Contact',       href: '#contact',       num: '05' },
+  { label: 'Certificates',  href: '#certifications',num: '05' },
+  { label: 'Contact',       href: '#contact',       num: '06' },
 ]
 
 export default function Navbar() {
@@ -24,7 +25,7 @@ export default function Navbar() {
 
   // Active section tracker
   useEffect(() => {
-    const ids = ['about', 'skills', 'contributions', 'projects', 'contact']
+    const ids = ['about', 'skills', 'contributions', 'projects', 'certificates', 'contact']
     const observer = new IntersectionObserver(
       (entries) => entries.forEach(e => e.isIntersecting && setActive(e.target.id)),
       { rootMargin: '-40% 0px -40% 0px' }

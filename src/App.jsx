@@ -9,6 +9,7 @@ import About          from './sections/About'
 import Skills         from './sections/Skills'
 import Contributions  from './sections/Contributions'
 import Projects       from './sections/Projects'
+import Certifications from './sections/Certifications'
 import Contact        from './sections/Contact'
 import Footer         from './components/Footer'
 
@@ -30,6 +31,7 @@ function Inner() {
           <Skills />
           <Contributions />
           <Projects />
+          <Certifications />
           <Contact />
         </main>
         <Footer />

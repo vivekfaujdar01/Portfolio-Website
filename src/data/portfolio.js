@@ -54,13 +54,13 @@ export const skills = [
 export const projects = [
   {
     id: 1,
-    title: "DevFlow",
-    subtitle: "Full Stack Task Manager",
+    title: "SmartLearn",
+    subtitle: "Full Stack Learning Platform",
     description:
-      "A real-time project management tool built with React, Node.js, and MongoDB. Features include drag-and-drop boards, JWT auth, WebSocket updates, and REST API.",
-    tech: ["React", "Node.js", "MongoDB", "Socket.io", "JWT"],
-    github: "https://github.com/vivekfaujdar",
-    live: "#",
+      "A full-stack educational platform built with React (Frontend) and Express.js (Backend). SmartLearn enables students to learn through courses and articles, while instructors can create and manage educational content.",
+    tech: ["React", "Node.js", "Express.js", "MongoDB", "JWT", "Tailwind CSS"],
+    github: "https://github.com/vivekfaujdar01/SmartLearn",
+    live: "https://smart-learn01.vercel.app/",
     accent: "#00d4ff",
     featured: true,
     // Replace with your actual screenshot path in /public/projects/
@@ -68,40 +68,27 @@ export const projects = [
   },
   {
     id: 2,
-    title: "AlgoViz",
-    subtitle: "Algorithm Visualizer",
-    description:
-      "Interactive DSA visualizer for sorting & pathfinding algorithms. Built with React and vanilla JS animations to make learning algorithms intuitive.",
-    tech: ["React", "JavaScript", "CSS Animations", "Tailwind"],
-    github: "https://github.com/vivekfaujdar",
-    live: "#",
+    title: "ProjectCamp",
+    subtitle: "Project Management Platform Backend",
+    description: `Built a secure backend system with JWT-based authentication (access & refresh tokens), email verification using Nodemailer & Mailgen, and password encryption via Bcrypt.
+Implemented secure cookie handling and a health-check API to ensure reliability and scalability.`,
+    tech: ["Node.js", "Express.js", "JWT", "Bcrypt", "Nodemailer", "Mailgen"],
+    github: "https://github.com/vivekfaujdar01/ProjectCamp",
+    live: null,
     accent: "#39d353",
     featured: true,
     image: null,
   },
   {
     id: 3,
-    title: "ShopAPI",
-    subtitle: "E-Commerce REST API",
+    title: "React Activties",
+    subtitle: "React Activties",
     description:
-      "Scalable REST API for an e-commerce platform. JWT authentication, role-based access, product CRUD, order management, and PostgreSQL database.",
-    tech: ["Node.js", "Express", "PostgreSQL", "JWT", "Docker"],
-    github: "https://github.com/vivekfaujdar",
+      "A collection of small React activities and example projects to learn and practice React fundamentals (components, state, hooks, routing, styling, and more).",
+    tech: ["React", "Tailwind CSS"],
+    github: "https://github.com/vivekfaujdar01/React_Activities",
     live: null,
     accent: "#f78166",
-    featured: false,
-    image: null,
-  },
-  {
-    id: 4,
-    title: "PortfolioGen",
-    subtitle: "Portfolio Generator CLI",
-    description:
-      "A CLI tool in Java that scaffolds a customizable portfolio site from a JSON config. Generates HTML/CSS output automatically.",
-    tech: ["Java", "CLI", "JSON", "HTML/CSS"],
-    github: "https://github.com/vivekfaujdar",
-    live: null,
-    accent: "#d2a8ff",
     featured: false,
     image: null,
   },
@@ -133,4 +120,34 @@ export const stats = [
   { value: "4+", label: "Projects Built" },
   { value: "300+", label: "LeetCode Problems" },
   { value: "∞",   label: "Cups of Coffee" },
+]
+
+export const certifications = [
+  {
+    id: 1,
+    title: "Cloud Computing",
+    issuer: "NPTEL",
+    date: "2025",
+    description: "Gaining a strong foundation in cloud architecture, virtualization, and distributed systems. Developed practical understanding of cloud service models (IaaS, PaaS, SaaS) and modern computing infrastructure used in scalable applications.",
+    link: "https://drive.google.com/file/d/1Xntx73FupcBPYvPlvCjO_lGARw4wPe_I/view",
+    accent: "#ff9900"
+  },
+  {
+    id: 2,
+    title: "The Bits and Bytes of Computer Networking",
+    issuer: "Coursera",
+    date: "2024",
+    description: "Building a solid understanding of networking fundamentals, protocols, and data transmission. Gained hands-on knowledge of network models, troubleshooting, and how the internet enables communication between systems.",
+    link: "https://drive.google.com/file/d/1Uq5vAbuUoKbRbOKzbUFoaFw5IWrCB609/view",
+    accent: "#0668E1"
+  },
+  {
+    id: 3,
+    title: "Java Programming",
+    issuer: "IamNeo",
+    date: "2025",
+    description: "Building a solid understanding of Java fundamentals, syntax, and object-oriented programming. Gained hands-on knowledge of core Java concepts, data structures, and problem-solving techniques.",
+    link: "https://drive.google.com/file/d/1Vzr9GOCEOJxhFinBhc8YfKhTtENgED9p/view",
+    accent: "#0668E1"
+  }
 ]

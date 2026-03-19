@@ -101,6 +101,18 @@ export const experience = [
     org: "Lovely Professional University",
     desc: "Studying Data Structures, DBMS, OS, Computer Networks. Active in coding clubs and hackathons.",
   },
+  {
+    year: "2021 – 2023",
+    role: "Intermediate",
+    org: "Rajasthan Board of Secondary Education",
+    desc: "Completed 12th grade with a focus on strong problem-solving skills.",
+  },
+  {
+    year: "2020 – 2021",
+    role: "Matriculation",
+    org: "Rajasthan Board of Secondary Education",
+    desc: "Completed 10th grade with a solid foundation in core subjects.",
+  }
 ]
 
 export const stats = [

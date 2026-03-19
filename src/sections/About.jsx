@@ -48,7 +48,7 @@ export default function About() {
             </div>
 
             {['Hey! I\'m Vivek Faujdar, a Computer Science student driven by a passion for building real things — not just learning about them.',
-              'I enjoy the full journey of software: designing APIs, writing clean backend logic, and crafting UIs that feel snappy and intuitive. I\'m especially interested in system design, performance optimization, and writing code that other developers actually enjoy reading.',
+              'I enjoy the full journey of software: designing APIs, writing clean backend logic, and crafting UIs that feel snappy and intuitive. I\'m especially interested in system design, performance optimization, and writing code.',
               'Outside of code, I\'m grinding DSA problems, contributing to open source, and always looking for the next interesting project to build.'
             ].map((para, i) => (
               <motion.p
@@ -105,7 +105,7 @@ export default function About() {
           {/* Right — timeline */}
           <motion.div variants={fadeRight} initial="hidden" animate={inView ? 'visible' : 'hidden'}>
             <p className="font-mono text-xs uppercase tracking-widest mb-8" style={{ color: 'var(--muted)' }}>
-              // Experience &amp; Education
+              // Education
             </p>
 
             <div className="relative">

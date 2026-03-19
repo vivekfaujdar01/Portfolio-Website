@@ -171,7 +171,7 @@ export default function Hero() {
                 animate={{ scale: [1, 1.4, 1] }}
                 transition={{ repeat: Infinity, duration: 1.5 }}
               />
-              <span style={{ color: 'var(--muted)' }}>Open to internships &amp; projects — 2025</span>
+              <span style={{ color: 'var(--muted)' }}>Open to internships &amp; projects — 2026</span>
             </motion.div>
 
             {/* Name */}

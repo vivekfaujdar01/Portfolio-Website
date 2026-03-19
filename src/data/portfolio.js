@@ -94,23 +94,11 @@ Implemented secure cookie handling and a health-check API to ensure reliability 
   },
 ]
 
-export const experience = [
+export const experience = [ 
   {
-    year: "2024 – Present",
-    role: "Open Source Contributor",
-    org: "Various Projects",
-    desc: "Contributing to open source React and Node.js projects. Focus on performance optimization and documentation.",
-  },
-  {
-    year: "2023 – 2024",
-    role: "Freelance Developer",
-    org: "Self-employed",
-    desc: "Built 3 full-stack web apps for local clients using React and Node.js. Managed deployment on AWS EC2.",
-  },
-  {
-    year: "2022 – Present",
+    year: "2023 – Present",
     role: "B.Tech Computer Science",
-    org: "Your University Name",   // ← change this
+    org: "Lovely Professional University",
     desc: "Studying Data Structures, DBMS, OS, Computer Networks. Active in coding clubs and hackathons.",
   },
 ]

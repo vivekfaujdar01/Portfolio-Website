@@ -7,10 +7,18 @@ export default function Cursor() {
   const [hover, setHover]       = useState(false)
   const [clicking, setClicking] = useState(false)
   const [trail, setTrail]       = useState([])
+  const [isTouch, setIsTouch]   = useState(false)
   const trailId                 = useRef(0)
   const { isDark }              = useTheme()
 
   useEffect(() => {
+    // Detect mobile using width and touch capability
+    const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window && window.innerWidth <= 1024);
+    if (isMobile) {
+      setIsTouch(true)
+      return
+    }
+
     const move = (e) => {
       setPos({ x: e.clientX, y: e.clientY })
       setTrail(t => [...t.slice(-8), { x: e.clientX, y: e.clientY, id: ++trailId.current }])
@@ -43,6 +51,8 @@ export default function Cursor() {
   }, [])
 
   const accentColor = '#5b6ef5'
+
+  if (isTouch) return null
 
   return (
     <>

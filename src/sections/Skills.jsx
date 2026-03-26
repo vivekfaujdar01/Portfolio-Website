@@ -5,9 +5,6 @@ import { skills } from '../data/portfolio'
 
 const categories = [...new Set(skills.map(s => s.category))]
 
-const barColors = (level) =>
-  level >= 85 ? '#5b6ef5' : level >= 75 ? '#06ffa5' : '#f59e0b'
-
 export default function Skills() {
   const [ref, inView] = useInView(0.08)
   const [hovered, setHovered] = useState(null)
@@ -70,23 +67,9 @@ export default function Skills() {
                       />
                     )}
 
-                    <div className="flex items-center justify-between mb-3 relative z-10">
-                      <div className="flex items-center gap-2">
-                        <span className="text-lg">{skill.icon}</span>
-                        <span className="font-display font-medium text-sm" style={{ color: 'var(--text)' }}>{skill.name}</span>
-                      </div>
-                      <span className="font-mono text-xs" style={{ color: barColors(skill.level) }}>{skill.level}%</span>
-                    </div>
-
-                    {/* Bar */}
-                    <div className="h-0.5 overflow-hidden relative z-10" style={{ background: 'var(--border)' }}>
-                      <motion.div
-                        initial={{ width: 0 }}
-                        animate={inView ? { width: `${skill.level}%` } : {}}
-                        transition={{ duration: 1.4, delay: ci * 0.08 + si * 0.07 + 0.4, ease: [0.22,1,0.36,1] }}
-                        style={{ height: '100%', background: barColors(skill.level),
-                          boxShadow: `0 0 8px ${barColors(skill.level)}` }}
-                      />
+                    <div className="flex items-center gap-2 relative z-10">
+                      <span className="text-lg">{skill.icon}</span>
+                      <span className="font-display font-medium text-sm" style={{ color: 'var(--text)' }}>{skill.name}</span>
                     </div>
                   </motion.div>
                 ))}
@@ -104,10 +87,10 @@ export default function Skills() {
           style={{ borderTop: '1px solid var(--border)' }}
         >
           <p className="font-mono text-xs text-center mb-6" style={{ color: 'var(--muted)' }}>
-            // tools I reach for daily
+            // tools I use daily
           </p>
           <div className="flex flex-wrap justify-center gap-3">
-            {['VS Code', 'Git', 'Docker', 'Postman', 'Figma', 'Linux', 'GitHub Actions', 'npm / yarn'].map((tool, i) => (
+            {['VS Code', 'Git', 'Docker', 'Postman', 'Linux', 'GitHub Actions', 'npm'].map((tool, i) => (
               <motion.span
                 key={tool}
                 initial={{ opacity: 0, scale: 0.8 }}

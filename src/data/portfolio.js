@@ -21,34 +21,34 @@ export const personalInfo = {
 
 export const skills = [
   // Languages
-  { name: "Java",               category: "Languages", level: 80, icon: "☕" },
-  { name: "JavaScript (ES6+)",  category: "Languages", level: 88, icon: "🟨" },
+  { name: "Java",               category: "Languages", icon: "☕" },
+  { name: "JavaScript (ES6+)",  category: "Languages", icon: "🟨" },
 
   // Web Development
-  { name: "HTML5 & CSS3",       category: "Web Development", level: 92, icon: "🌐" },
-  { name: "Tailwind CSS",       category: "Web Development", level: 87, icon: "🎨" },
-  { name: "React.js",           category: "Web Development", level: 88, icon: "⚛️" },
-  { name: "Express.js",         category: "Web Development", level: 82, icon: "🚂" },
-  { name: "Node.js",            category: "Web Development", level: 83, icon: "🟢" },
+  { name: "HTML5 & CSS3",       category: "Web Development", icon: "🌐" },
+  { name: "Tailwind CSS",       category: "Web Development", icon: "🎨" },
+  { name: "React.js",           category: "Web Development", icon: "⚛️" },
+  { name: "Express.js",         category: "Web Development", icon: "🚂" },
+  { name: "Node.js",            category: "Web Development", icon: "🟢" },
 
   // Database Management
-  { name: "MongoDB",            category: "Database Management", level: 80, icon: "🍃" },
-  { name: "MySQL",              category: "Database Management", level: 75, icon: "🐬" },
+  { name: "MongoDB",            category: "Database Management", icon: "🍃" },
+  { name: "MySQL",              category: "Database Management", icon: "🐬" },
 
   // Version Control
-  { name: "GitHub",             category: "Version Control", level: 90, icon: "🐙" },
-  { name: "GitLab",             category: "Version Control", level: 78, icon: "🦊" },
+  { name: "GitHub",             category: "Version Control", icon: "🐙" },
+  { name: "GitLab",             category: "Version Control", icon: "🦊" },
 
   // Development & Utility
-  { name: "Linux",              category: "Development & Utility", level: 72, icon: "🐧" },
-  { name: "Postman",            category: "Development & Utility", level: 85, icon: "📮" },
-  { name: "Docker",             category: "Development & Utility", level: 68, icon: "🐳" },
+  { name: "Linux",              category: "Development & Utility", icon: "🐧" },
+  { name: "Postman",            category: "Development & Utility", icon: "📮" },
+  { name: "Docker",             category: "Development & Utility", icon: "🐳" },
 
   // Soft Skills
-  { name: "Problem-Solving",    category: "Soft Skills", level: 92, icon: "🧩" },
-  { name: "Team Player",        category: "Soft Skills", level: 90, icon: "🤝" },
-  { name: "Adaptability",       category: "Soft Skills", level: 88, icon: "🔄" },
-  { name: "Time Management",    category: "Soft Skills", level: 85, icon: "⏱️" },
+  { name: "Problem-Solving",    category: "Soft Skills", icon: "🧩" },
+  { name: "Team Player",        category: "Soft Skills", icon: "🤝" },
+  { name: "Adaptability",       category: "Soft Skills", icon: "🔄" },
+  { name: "Time Management",    category: "Soft Skills", icon: "⏱️" },
 ]
 
 export const projects = [
